@@ -11,4 +11,4 @@ namespace Business.Abstract
         Category GetById(int categoryId);
     }
 }
-//category ile ilgili dış dünyaya neyi servis etmek istiyorsam o operasyonları yazıyrum
+//category ile ilgili dış dünyaya neyi servis etmek istiyorsam o operasyonları yazıyorum
