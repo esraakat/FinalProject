@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Result;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -17,28 +19,51 @@ namespace Business.Concrete
             _productDal1 = productDal1;
         }
 
+        public IResult Add(Product product)
+        {
 
-        public List<Product> GetAll()
+            if (product.ProductName.Length > 2)
+            {
+                return new ErrorResult (Messages.ProductNameInvalid); //magic string
+            }
+
+            _productDal1.Add(product);
+            return new SuccessResult(Messages.ProductAdded); //bunu yapabilmnein yöntemi bir tane constructor eklemektir.
+        }
+        //mesaj vermek de istemeyebilirisn.
+
+        public IDataResult<List<Product>> GetAll()
         {
             //iş kodları, ifler...
             //yetkisi var mı, varsa alltaki komutlar devreye girebilir.
             //InMemoryProductDal ınMemoryProductDal = new InMemoryProductDal(); /Eğer böyle yazarsam iş kodlarının tamamı bellekle çalışır. Gerçek veritabanına geçeceğim zaman operasyonların hepsini veri erişimini değiştirdiğim zaman değiştirmem gerekir.
-            return _productDal1.GetAll();
+
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
+            }
+
+            return new SuccessDataResult<List<Product>>(_productDal1.GetAll(), Messages.ProductsListed);
         }
 
-        public List<Product> GetAllByCategoryId(int Id)  //filtrelenmiş ürün listesi
+        public IDataResult<List<Product>> GetAllByCategoryId(int Id)  //filtrelenmiş ürün listesi
         {
-            return _productDal1.GetAll(p => p.CategoryId == Id);
+            return new SuccessDataResult<List<Product>>(_productDal1.GetAll(p => p.CategoryId == Id));
         }
 
-        public List<Product> GetByUnitPrice(decimal min, decimal max)
+        public IDataResult<List<Product>> GetByUnitPrice(decimal min, decimal max)
         {
-            return _productDal1.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max);
+            return new SuccessDataResult<List<Product>>(_productDal1.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max));
         }
 
-        public List<ProductDetailDto> GetProductDetails()
+        public IDataResult<List<ProductDetailDto>> GetProductDetails()
         {
-            return _productDal1.GetProductDetails();
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal1.GetProductDetails());
+        }
+
+        public IDataResult<Product> GetProductId(int productId)
+        {
+            return new SuccessDataResult<Product>(_productDal1.Get(p => p.ProductId == productId));
         }
     }
 }

@@ -13,9 +13,15 @@ namespace ConsoleUI
             //CategoryTest();
 
             ProductManager productManager = new ProductManager(new EfProductDal());
-            foreach (var product in productManager.GetProductDetails())
+
+            var result = productManager.GetProductDetails();
+
+            if (result.Success)
             {
-                Console.WriteLine(product.ProductName + "/" + product.CategoryName);
+                foreach (var product in result.Data)
+                {
+                    Console.WriteLine(product.ProductName + "/" + product.CategoryName);
+                }
             }
         }
 
@@ -28,15 +34,15 @@ namespace ConsoleUI
             }
         }
 
-        private static void ProductTest()
-        {
-            ProductManager productManager = new ProductManager(new EfProductDal()); //hangi veri yöntemiyle çalıştığını söyle. Interface inmemory'nin referansını tutabiliyor.
+        //private static void ProductTest()
+        //{
+        //    ProductManager productManager = new ProductManager(new EfProductDal()); //hangi veri yöntemiyle çalıştığını söyle. Interface inmemory'nin referansını tutabiliyor.
 
-            foreach (var product in productManager.GetAllByCategoryId(2)) //business'a diyor ki...
-            {
-                Console.WriteLine(product.ProductName);
-            }
-        }
+        //    foreach (var product in productManager.GetAllByCategoryId(2)) //business'a diyor ki...
+        //    {
+        //        Console.WriteLine(product.ProductName);
+        //    }
+        //}
     }
 }
 //SOLID - Open Closed Principle - yaptığın yazılıma yeni bir özellik ekliyorsan mevcuttaki hiç bir koduna dokunamazsın
