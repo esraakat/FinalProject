@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) //projen hangi db ile ilişkili
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Northwind;Trusted_Connection=true"); //sqlserver'ın nerede olduğunu anlatır
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Northwind;Trusted_Connection=true"); //sqlserver'ın nerede olduğunu anlatır
         }
         //Hangi veri tabanına bağlanacağımızı belirledik. Şimdi de hangi clas hangi tabloya karşılık gelecek
 
