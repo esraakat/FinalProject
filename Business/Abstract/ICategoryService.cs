@@ -9,7 +9,7 @@ namespace Business.Abstract
 {
     public interface ICategoryService //category ile ilgili dış dünyaya ne servis etmek istiyorsan o operasyonları yaz.
     {
-        List<Category> GetAll();
+        List<Category> GetAll(); 
         Category GetById(int categoryId);
     }
 }
