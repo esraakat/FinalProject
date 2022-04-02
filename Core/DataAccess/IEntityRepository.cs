@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Core.DataAccess 
 {
-    //class demek referans tip olabilir demek
+    //class referans tip olabilir demek
     //T ya IEntity olabilir ya da IEntity implemente eden bir nesne olabilir.
-    //new() - T newlenebbilir olmalı demek
+    //new() - T newlenebeilir olmalı demek
     public interface IEntityRepository<T> where T: class, IEntity, new() //generic constraint - generic kısıt
     {
         List<T> GetAll(Expression<Func<T, bool>> filter = null); //filter = null filtre vermeyebilirsin demek yani filtre yoksa tüm datayı getir.
