@@ -11,7 +11,7 @@ namespace Core.CrossCuttingConcerns.Validation
     {
         public static void Validate(IValidator validator, object entity)
         {
-            var context = new ValidationContext<object>(entity); //Product için doğrulama yapıcam diyorum
+            var context = new ValidationContext<object>(entity); //entity için doğrulama yapıcam diyorum
             var result = validator.Validate(context);
             if (!result.IsValid)
             {

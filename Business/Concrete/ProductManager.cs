@@ -26,12 +26,11 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(ProductValidator))] //add metodunu doğrula productvalidator'ı kullanarak
+        [ValidationAspect(typeof(ProductValidator))] //productvalidator'ı kullanarak add metodunu doğrula 
         public IResult Add(Product product)
         {
             //business - iş ihtiyaçlarımıza uygunluk
             //validation - bir nesnenyi iş kurallarına dahil etmek için bu nesnenin yapısal olarak uygun olup olmadığını kontrol etme
-
 
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);

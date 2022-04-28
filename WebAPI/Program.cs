@@ -19,9 +19,11 @@ namespace WebAPI
             CreateHostBuilder(args).Build().Run();
         }
 
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args) //server ile ilgili konfigürasyonun olduðu yer
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                 //Senin .net altýnda ioc yapýn var biliyorum ama ben onu kullanýmýycam onu belirtmek için
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory()) //servis saðlayýcý factory olarak kullan
                 .ConfigureContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterModule(new AutofacBusinessModule()); //.net core yerine ben baþka bir ioc container kullanýcam

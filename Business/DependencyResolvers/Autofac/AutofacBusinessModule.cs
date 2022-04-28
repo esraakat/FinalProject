@@ -18,15 +18,15 @@ namespace Business.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ProductManager>().As<IProductService>().SingleInstance();//Birisi senden IProductService sterse ona ProductManager ver.
+            builder.RegisterType<ProductManager>().As<IProductService>().SingleInstance();//Birisi senden IProductService isterse ona ProductManager ver.
             builder.RegisterType<EfProductDal>().As<IProductDal>().SingleInstance();
 
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();//çalışan uygulama içerisine
 
-            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
+            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces() //implemente edilmiş interfaceleri  bul
                 .EnableInterfaceInterceptors(new ProxyGenerationOptions()
                 {
-                    Selector = new AspectInterceptorSelector()
+                    Selector = new AspectInterceptorSelector() //onlar için bu methodu çağır, bütün classlar için ilk önce bu çalışır, git bak aspect var mı?
                 }).SingleInstance();
         }
     }
