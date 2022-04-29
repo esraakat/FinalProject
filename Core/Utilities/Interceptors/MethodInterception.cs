@@ -6,11 +6,12 @@ namespace Core.Utilities.Interceptors
     //Bütün methodlarımın çatısı, tüm methodlarım bu kurallardan geçicek.
     public abstract class MethodInterception : MethodInterceptionBaseAttribute
     {
+        //invocation - business method
         protected virtual void OnBefore(IInvocation invocation) { }
         protected virtual void OnAfter(IInvocation invocation) { }
         protected virtual void OnException(IInvocation invocation, System.Exception e) { }
         protected virtual void OnSuccess(IInvocation invocation) { }
-        public override void Intercept(IInvocation invocation) //çalıştırmak istediğin method, add gibi düşün
+        public override void Intercept(IInvocation invocation) //invocation - çalıştırmak istediğin method, add gibi düşün
         {
             var isSuccess = true;
             OnBefore(invocation); //methodun başında çalışır.
