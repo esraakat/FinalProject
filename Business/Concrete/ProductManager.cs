@@ -29,6 +29,9 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
+
+        [SecuredOperation]()            //product.add veya admin claimlerinden birisine sahip olması gerekiyor
+
         //validation - bir nesnenyi iş kurallarına dahil etmek için bu nesnenin yapısal olarak uygun olup olmadığını kontrol etme
         [ValidationAspect(typeof(ProductValidator))] //productvalidator'ı kullanarak add metodunu doğrula 
         public IResult Add(Product product)
