@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -30,7 +31,7 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation]()            //product.add veya admin claimlerinden birisine sahip olması gerekiyor
+        [SecuredOperation("product.add, admin")]          //product.add veya admin claimlerinden birisine sahip olması gerekiyor
 
         //validation - bir nesnenyi iş kurallarına dahil etmek için bu nesnenin yapısal olarak uygun olup olmadığını kontrol etme
         [ValidationAspect(typeof(ProductValidator))] //productvalidator'ı kullanarak add metodunu doğrula 
