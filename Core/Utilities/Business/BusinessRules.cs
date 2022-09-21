@@ -13,7 +13,7 @@ namespace Core.Utilities.Business
         {
             foreach (var logic in logics)
             {
-                if (!logic.Success)//parametreyle gönderilen iş kurallarına uymayanları business a bildir
+                if (!logic.Success) //parametreyle gönderilen iş kurallarına uymayanları business'a bildir
                 {
                     return logic; //error result döndürür
                 }

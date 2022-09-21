@@ -16,7 +16,8 @@ namespace DataAccess.Concrete.EntityFramework
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\ProjectModels;Database=Northwind;Trusted_Connection=true"); //sqlserver'ın nerede olduğunu anlatır
         }
-        //Hangi veri tabanına bağlanacağımızı belirledik. Şimdi de hangi clas hangi tabloya karşılık gelecek
+
+        //Hangi veri tabanına bağlanacağımızı belirledik. Şimdi de hangi clas hangi tabloya karşılık gelecek onu belirle
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }

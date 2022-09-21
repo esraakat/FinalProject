@@ -8,6 +8,7 @@ namespace Core.Utilities.Results
 {
     public class DataResult<T> : Result, IDataResult<T>
     {
+        //base'e success ve message ı gönderir, resulttaki kodu tekrar yazmamıza engel olur.
         public DataResult(T data, bool success, string message) : base(success, message)
         {
             Data = data;

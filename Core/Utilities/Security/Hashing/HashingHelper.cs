@@ -10,7 +10,7 @@ namespace Core.Utilities.Security.Hashing
     {
         public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt) //password'un hashini ve saltını oluşturacak yapıyı içerecek.
         {
-            //verdğimiz bir password değerine göre salt ve hash değerini oluşturmaya yarıyor.
+            //verdiğimiz bir password değerine göre salt ve hash değerini oluşturmaya yarıyor.
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
                 passwordSalt = hmac.Key; //kullandığımız algoritmanın o an oluşturduğu key değeri

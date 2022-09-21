@@ -14,12 +14,12 @@ namespace Core.Utilities.Interceptors
         {
             var classAttributes = type.GetCustomAttributes<MethodInterceptionBaseAttribute> //classın attributelerini oku
                 (true).ToList();
-            var methodAttributes = type.GetMethod(method.Name) //methodun attributelerini oku
+            var methodAttributes = type.GetMethod(method.Name) //mototun attributelerini oku
                 .GetCustomAttributes<MethodInterceptionBaseAttribute>(true);
-            classAttributes.AddRange(methodAttributes); //ve onlları bir listeye koy
-            //classAttributes.Add(new ExceptionLogAspect(typeof(FileLogger))); //otomatik olarak sistemdeki bütün methodları loga dahil et.
+            classAttributes.AddRange(methodAttributes); //ve onları bir listeye koy
+            //classAttributes.Add(new ExceptionLogAspect(typeof(FileLogger))); //otomatik olarak sistemdeki bütün metotları loga dahil et.
 
-            return classAttributes.OrderBy(x => x.Priority).ToArray();//fakat onların çalışma sıralarını da önceliğe göre sırala.
+            return classAttributes.OrderBy(x => x.Priority).ToArray(); //fakat onların çalışma sıralarını da önceliğe göre sırala.
         }
     }
 

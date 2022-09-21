@@ -2,6 +2,10 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Business;
@@ -20,27 +24,24 @@ namespace Business.Concrete
 {
     public class ProductManager : IProductService
     {
-        //Bir entityManagaer kendisi hariç başka dalı enjekte edemez, onun yerine service enjekte edebilir.
+        //Bir entityManager kendisi hariç başka bir dalı enjekte edemez, onun yerine service enjekte edebilir.
         IProductDal _productDal;
         ICategoryService _categoryService;
 
-        public ProductManager(IProductDal productDal, ICategoryService categoryService)//kural categoryService'den gelicek.
+        public ProductManager(IProductDal productDal, ICategoryService categoryService)
         {
             _productDal = productDal;
             _categoryService = categoryService;
         }
 
 
-        [SecuredOperation("product.add, admin")]          //product.add veya admin claimlerinden birisine sahip olması gerekiyor
-
-        //validation - bir nesnenyi iş kurallarına dahil etmek için bu nesnenin yapısal olarak uygun olup olmadığını kontrol etme
-        [ValidationAspect(typeof(ProductValidator))] //productvalidator'ı kullanarak add metodunu doğrula 
+        [SecuredOperation("product.add, admin")] //product.add veya admin claimlerinden birisine sahip olması gerekiyor
+        [ValidationAspect(typeof(ProductValidator))] //Productvalidator'ı kullanarak add metodunu doğrula 
         public IResult Add(Product product)
         {
-            //business - iş ihtiyaçlarımıza uygunluk
-            IResult result = BusinessRules.Run(CheckIfProductNameExist(product.ProductName),
+            IResult result = BusinessRules.Run(CheckIfProductNameExist(product.ProductName), //bizim için iş kurallarını çalıştıracak
                 CheckIfProductCountOfCategoryCorrect(product.ProductId),
-                CheckIfCategoryLimitExceded()); //bizim için iş kurallarını çalıştıracak
+                CheckIfCategoryLimitExceded()); 
             if (result != null)
             {
                 return result;
@@ -50,6 +51,7 @@ namespace Business.Concrete
 
         } 
 
+        [CacheAspect] //key, value ile tutuyoruz
         public IDataResult<List<Product>> GetAll()
         {
 
@@ -66,6 +68,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id));
         }
 
+        [CacheAspect]
+        [PerformanceAspect(5)] //metodun çalışması 5 saniyeyi geçerse beni uyar - performance için
         public IDataResult<Product> GetById(int id)
         {
             return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == id));
@@ -85,12 +89,12 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails());
         }
 
+        [CacheRemoveAspect("IProductService.Get")] //bellekte içerisinde get olan tüm key'leri iptal et
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Update(Product product)
         {
             throw new NotImplementedException();
         }
-
 
         private IResult CheckIfProductCountOfCategoryCorrect(int categoryId) //neden private? sadece bu class içerisinde kullanılsın.
         {
@@ -104,7 +108,7 @@ namespace Business.Concrete
         }
         private IResult CheckIfProductNameExist(string productName)
         {
-            var result = _productDal.GetAll(p => p.ProductName == productName).Any();//Buna uyan kayıt var mı?
+            var result = _productDal.GetAll(p => p.ProductName == productName).Any(); //Buna uyan kayıt var mı?
             if (result)
             {
                 return new ErrorResult(Messages.ProductNameAlreadyExists);
@@ -122,6 +126,17 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Product product)
+        {
+            Add(product);   //bunu yaptıktan sonra hata alırsan bu işlemi de iptal et
+            if (product.UnitPrice < 10)
+            {
+                throw new Exception();
+            }
 
+            Add(product);
+            return null;
+        }
     }
 }

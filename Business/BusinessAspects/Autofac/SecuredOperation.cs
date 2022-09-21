@@ -13,6 +13,7 @@ using Business.Constants;
 
 namespace Business.BusinessAspects.Autofac
 {
+    //Autherization aspectler genellikle business’a yazılır. Çünkü her projenin yetkilendirme algoritması değişebilir.
     public class SecuredOperation : MethodInterception
     {
         private string[] _roles;

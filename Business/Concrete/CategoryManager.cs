@@ -14,15 +14,14 @@ namespace Business.Concrete
     {
         ICategoryDal _categoryDal;
 
-        public CategoryManager(ICategoryDal categoryDal)//bağımlılığımı constructor injection ile yapıyorum.
+        public CategoryManager(ICategoryDal categoryDal) //bağımlılığı constructor injection ile minimize ediyorum.
         {
             _categoryDal = categoryDal;
         }
 
         public IDataResult<List<Category>> GetAll()
         {
-            //
-            //iş kodları
+            //business codes
             return new SuccessDataResult<List<Category>>(_categoryDal.GetAll());
         }
 
@@ -32,4 +31,4 @@ namespace Business.Concrete
         }
     }
 }
-//business katmanı veri erişime bağlı, veri erişimi şimdi enityframework ama değişebilir o yüzden bağımlılığı min et. 
+//business katmanı veri erişime bağlı, veri erişimi şimdi enityframework ama değişebilir o yüzden bağımlılığı minimize et. 

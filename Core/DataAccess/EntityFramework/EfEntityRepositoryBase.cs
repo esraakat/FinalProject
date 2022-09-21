@@ -19,8 +19,8 @@ namespace Core.DataAccess.EntityFramework
             using (TContext context = new TContext()) //using bitince içindeki nesne hemen bellekten atılır çünkü context nesnesi biraz pahalı
             {
                 var addedEntity = context.Entry(entity); //Referansı yakala! Veri kaynağımla ilişkilendirdim, sonra ne yapayım?
-                addedEntity.State = EntityState.Added;//Durumu belirt, o aslında eklenecek bir nesne
-                context.SaveChanges();//İşlemleri gerçekleştir
+                addedEntity.State = EntityState.Added; //Durumu belirt, o aslında eklenecek bir nesne
+                context.SaveChanges(); //İşlemleri gerçekleştir
             }
         }
 

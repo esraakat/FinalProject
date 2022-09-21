@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Extensions
 {
+    //c#'ta bir extension oluşturmak için hem class hem de metot statik olmalıdır
     public static class ClaimExtensions
     {
         public static void AddEmail(this ICollection<Claim> claims, string email)

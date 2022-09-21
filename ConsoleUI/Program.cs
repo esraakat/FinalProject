@@ -6,7 +6,7 @@ using System;
 namespace ConsoleUI
 {
     //SOLID
-    //Open Closed Principle - Yaptığın yazılıma yeni bir özellik ekliyorsan mevuttaki hiçbir koduna dokunamazsın
+    //Open Closed Principle - Yaptığın yazılıma yeni bir özellik ekliyorsan mevcuttaki hiçbir koduna dokunamazsın
     class Program
     {
         static void Main()
@@ -39,8 +39,6 @@ namespace ConsoleUI
             {
                 Console.WriteLine(result.Message);
             }
-
-
         }
     }
 }
