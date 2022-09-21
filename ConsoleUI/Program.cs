@@ -9,7 +9,7 @@ namespace ConsoleUI
     //Open Closed Principle - Yaptığın yazılıma yeni bir özellik ekliyorsan mevcuttaki hiçbir koduna dokunamazsın
     class Program
     {
-        static void Main()
+        static void Main() 
         {
             ProductTest();
             //CategoryTest();
