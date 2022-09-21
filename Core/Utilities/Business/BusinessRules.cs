@@ -15,7 +15,7 @@ namespace Core.Utilities.Business
             {
                 if (!logic.Success) //parametreyle gönderilen iş kurallarına uymayanları business'a bildir
                 {
-                    return logic; //error result döndürür
+                    return logic; //error result döndürür 
                 }
             }
             return null;
